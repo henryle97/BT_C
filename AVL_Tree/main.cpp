@@ -45,7 +45,7 @@ void LeftRotate(AVLNode* &P)
 void RightRotate(AVLNode* &P)
 {
     AVLNode *Q;
-    Q = P->pRight;
+    Q = P->pLeft;
     P->pLeft = Q->pRight;
     Q->pRight = P;
     P = Q;
