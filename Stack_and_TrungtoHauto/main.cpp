@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cmath>
 
 /*Stack using linked list*/
 
@@ -269,6 +270,8 @@ int doOperand(int a, int b, char op)
         {
             return a / b;
         }
+    case '^':
+        return pow(a, b);
     default :
         return 0;
     }
@@ -282,7 +285,7 @@ int CaculatePostFix(StackNode *&top, string postFix)
     for (char c : postFix)
     {
         //Kiem tra xem c co phai la phep toan
-        if ( c != '+' && c != '-' && c != '*' && c!= '/')
+        if ( c != '+' && c != '-' && c != '*' && c!= '/' && c != '^')
         {
             item = c - '0';         //Chuyen char sang int : '3' -> 3
             push(top, item);        // Dua item vao stack
@@ -319,6 +322,7 @@ string ConvertInfixToPostfix(StackNode *&top, string infix)
 
     for (char c : infix)    //Duyet tung ky tu trong string (Duyet bieu thuc tu trai qua phai)
     {
+        //Neu gap toan hang
         if (c != '+' && c != '-' && c != '*' && c!= '/' && c!= '^' && c != '(' && c != ')')
             postfix.push_back(c);
         else {
