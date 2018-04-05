@@ -1,5 +1,6 @@
 # depslib dependency file v1.0
-1522638928 source:c:\users\admin\documents\github\bt_c\stack_and_trungtohauto\main.cpp
+1522666369 source:c:\users\admin\documents\github\bt_c\stack_and_trungtohauto\main.cpp
 	<iostream>
 	<string>
+	<cmath>
 

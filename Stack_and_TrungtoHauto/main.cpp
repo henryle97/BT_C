@@ -28,6 +28,14 @@ int doOperand(int a, int b, char op);
 string ConvertInfixToPostfix(StackNode *&top, string infix);
 int doUuTien(char c);
 int CaculateExpression(StackNode *&top, string infix);
+void PrintStack(StackNode *top)
+{
+    while(!StackEmpty(top))
+    {
+        cout << top->data << " ";
+        top = top->pNext;
+    }
+}
 
 
 int main()
@@ -322,6 +330,7 @@ string ConvertInfixToPostfix(StackNode *&top, string infix)
 
     for (char c : infix)    //Duyet tung ky tu trong string (Duyet bieu thuc tu trai qua phai)
     {
+
         //Neu gap toan hang
         if (c != '+' && c != '-' && c != '*' && c!= '/' && c!= '^' && c != '(' && c != ')')
             postfix.push_back(c);
@@ -337,11 +346,21 @@ string ConvertInfixToPostfix(StackNode *&top, string infix)
                 pop(top);       //pop '(' rq khoi ngan xep
             }
             else {          //Gap phep toan : dua tu stack -> postfix cho den khi gap phep toan do uu tien thap hon OR c va temp cung bang '^'
-                temp = Top(top);
-                while (doUuTien(temp) >= doUuTien(c) && (temp != '^' && c != '^') )
+
+                if (top == NULL)    //Neu ngan xep rong
+                {
+                    push(top, c);
+                    continue;       //Nhet c vao stack va xet ky tu tiep theo
+                }
+                //Kiem tra phep toan o dau ngan xep voi phep toan dang xet
+                while (doUuTien(top->data) >= doUuTien(c) && (top->data != '^' && c != '^') )
                 {
                     temp = Pop_Top(top);
+
                     postfix.push_back(temp);
+                    if (top == NULL)
+                        break;          //thoat khoi vong while
+
                 }
                 // Dua toan hang hien tai vao stack
                 push(top, c);
@@ -349,6 +368,7 @@ string ConvertInfixToPostfix(StackNode *&top, string infix)
         }
     } //END FOR
     //Duyet het BT thi dua all operator tu stack vao postfix
+
     while (!StackEmpty(top))
     {
         temp = Pop_Top(top);
