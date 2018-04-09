@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1523170858 source:c:\users\admin\documents\github\bt_c\directedgraph_chutrinh\test.c
+
+1523195668 source:c:\users\admin\documents\github\bt_c\directedgraph_chutrinh\main.cpp
+	<iostream>
+	<vector>
+	<algorithm>
+

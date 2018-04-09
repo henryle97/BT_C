@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1523198624 source:c:\users\admin\documents\github\bt_c\graph_topo\main.cpp
+	<iostream>
+	<vector>
+	<algorithm>
+
