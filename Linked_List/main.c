@@ -89,6 +89,16 @@ void printList(LNode *node)
     }
 
 }
+
+void printReverse(LNode *node)
+{
+    if (node == NULL)
+        return;
+    else {
+        printReverse(node->next);
+        printf("%d ", node->data);
+    }
+}
 int main()
 {
 //Tao ngau nhien 1 danh sach voi cac phan tu la so nguyen
@@ -102,11 +112,13 @@ int main()
         a = rand()%100;                                   //0-99
         head = insertHead(head, a);
     }
+    printf("Linked List: ");
     printList(head);
     printf("\n");
-    insertLast(head, 5);
-    deleteHead(&head);
-    printList(head);
+
+    printf("Linkded List in the reverse order: ");
+    printReverse(head);
+
     free(head);
     return 0;
 }

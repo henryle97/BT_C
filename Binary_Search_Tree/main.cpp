@@ -105,13 +105,18 @@ BNode* DeleteNode(BNode* T, int x)       //Xoa NODE co gia tri x
     BNode* Temp;
     /* base case */
     if (T == NULL)
+    {
+        cout << "Cay dang rong , khong the xoa !" <<endl;
         return T;
+    }
+
     //Duyet tim vi tri cua key
     if (x < T->data)
         T->pLeft = DeleteNode(T->pLeft, x);
     else if (x > T->data)
         T->pRight = DeleteNode(T->pRight, x);
-    else {
+    else {           // Tim thay
+
         //Neu 2 con
         if (T->pLeft && T->pRight)
         {
@@ -119,16 +124,17 @@ BNode* DeleteNode(BNode* T, int x)       //Xoa NODE co gia tri x
             T->data = Temp->data;                            //Thay the node x boi min con phai
             T->pRight = DeleteNode(T->pRight, T->data);     //Xoa temp (min con phai)
         }
-        else {
-            /*Co 1 hoac 0 con */
+        else {  /*Co 1 hoac 0 con */
             if (T->pLeft == NULL)      //Chi co con phai or ko con
                 T = T->pRight;        // T = con phai neu 1 con : T = NULL neu ko con
             else if (T->pRight == NULL)
                 T = T->pLeft;
         }
+        return T;
     }
-    return T;
 
+    //Neu k thay node trong tree
+    cout << "Khong co node nay trong tree" <<endl;
 }
 // Print InOder (In theo thu tu giua)
 void PrintInOrder(BNode* root)
@@ -136,36 +142,101 @@ void PrintInOrder(BNode* root)
     if (root != NULL)
     {
         PrintInOrder(root->pLeft);
-        cout << root->data <<endl;
+        cout << root->data << " " ;
         PrintInOrder(root->pRight);
     }
 }
 
+/* Hàm tính tổng số lá trên cây */
+int getLeafCount(BNode *node)
+{
+    if (node == NULL)
+        return 0;
+    if (node->pLeft == NULL && node->pRight == NULL)
+        return 1;
+    else
+        return getLeafCount(node->pLeft) + getLeafCount(node->pRight);
+}
+
+int max(int l, int r)
+{
+    if (l < r)
+        return r;
+    else
+        return l;
+}
+/* Hàm tính height của cây : height = depth + 1 */
+int heightOfTree(BNode *root)
+{
+    if (root == NULL)
+        return 0;
+    else {
+        int l = heightOfTree(root->pLeft);
+        int r = heightOfTree(root->pRight);
+        return max(l, r) + 1;       //Max (l, r) = depth
+    }
+}
+/* Hàm kiểm tra node lá trên cây có cùng mức */
+bool checkLeveOfLeaf(BNode *root)
+{
+
+}
 int main()
 {
     BNode *root = NULL;
 
-    CreatTree(root);
+    // Menu
+    cout << "\t\tMENU" <<endl;
+    cout << "1. Them node" <<endl;
+    cout << "2. Xoa node" <<endl;
+    cout << "3. Duyet theo thu tu giua" <<endl;
+    cout << "4. Tim kiem 1 node" <<endl;
+    cout << "5. Tong so la tren cay "<<endl;
+    cout << "6. Chieu cao cua cay (root -> leafMax)" <<endl;
+    cout << "7. Thoat" <<endl;
+    int choose;
+    do {
+    cout << "\nMoi ban chon: ";
+    cin >> choose;
+    switch (choose)
+    {
+        case 1: CreatTree(root);
+                break;
+        case 2:
+                int nodeDel;
+                cout << "Nhap node can xoa: ";
+                cin >> nodeDel;
+                DeleteNode(root, nodeDel);
+                break;
+        case 3:
+            cout << "Duyet theo InOrder: ";
+            if (root == NULL)
+            {
+                cout << "Cay dang rong !!!" <<endl;
+                break;
+            }
+            PrintInOrder(root);
+            break;
+        case 4:
+            {int x;
+            cout << "\nNhap key tim kiem: ";
+            cin >> x;
+            BNode *result = Search(root, x);
+            if (result == NULL)
+                cout << "Ko tim thay key trong tree" <<endl;
+            else
+                cout << "Tim thay "<< result->data<<endl;
+            break;}
+        case 5:
+            cout << "Tong so la tren cay la: " << getLeafCount(root) <<endl;
+            break;
+        case 6:
+            cout << "Height cua cay la : " << heightOfTree(root) <<endl;
+            cout << "Depth cua cay la : " << heightOfTree(root) - 1 << endl;
+            break;
+    }
+    } while (choose != 7);
 
-    /*Duyet cay theo InOrder */
-    cout << "Duyet cay theo thu tu giua la:"<<endl;
-    PrintInOrder(root);
-
-    /*Tim kiem
-    int x;
-    cout << "Nhap key tim kiem: ";
-    cin >> x;
-    BNode *result = Search(root, x);
-    if (result == NULL)
-        cout << "Ko tim thay key trong tree";
-    else
-        cout << "Tim thay "<< result->data<<endl;
-    */
-    int key;
-    cout << "Nhap node can xoa: ";
-    cin >> key;
-    DeleteNode(root, key);
-    PrintInOrder(root);
 
     return 0;
 }
