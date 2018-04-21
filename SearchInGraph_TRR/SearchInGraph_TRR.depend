@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1524201698 source:/home/hisiter97/Hisiter/DataStruct_Algorthrim/SearchInGraph_TRR/main.cpp
+	<iostream>
+	<fstream>
+	<vector>
+	<queue>
+	<map>
+
